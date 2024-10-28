@@ -1,4 +1,4 @@
-myp[tool.poetry]
+[tool.poetry]
 name = "pythonproject4"
 version = "0.1.0"
 description = ""
@@ -8,6 +8,16 @@ readme = "README.tropmd"
 [tool.poetry.dependencies]
 python = "^3.12"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+flake8 = "^7.1.1"
+
+
+[tool.poetry.group.lint.dependencies]
+black = "^24.10.0"
+isort = "^5.13.2"
+mypy = "^1.13.0"
 
 [build-system]
 requires = ["poetry-core"]
