@@ -23,7 +23,7 @@
 
 1. Клонируйте репозиторий:
 ```
-git clone https://git@github.com:mariapl7/project3.git
+git clone https://git@github.com:mariapl7/project4.git
 ```
 2. Установите зависимости:
 ```
