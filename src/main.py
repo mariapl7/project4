@@ -1,5 +1,3 @@
-
-
 class Product:
     """Клаcc для продукта."""
     name: str
@@ -12,8 +10,23 @@ class Product:
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
+
+    @classmethod
+    def new_product(cls, name, description, price, quantity):
+        return cls(name, description, price, quantity)
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float):
+        self.__price.append(new_price)
+        if new_price <= 0:
+            raise ValueError('Цена не должна быть нулевая или отрицательная')
+        self.__price = new_price
 
 
 class Category:
@@ -28,9 +41,24 @@ class Category:
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products
         Category.category_count += 1
         Category.product_count += 1
+
+    def add_product(self, product: Product):
+        self.__products.append(product)
+        Category.product_count += 1
+
+    @property
+    def products(self):
+        products_info = []
+
+        for product in self.__products:
+            product_info = f"{product.name}, {product.price} руб.\nОстаток: {product.quantity} шт."
+            products_info.append(product_info)
+
+        return "\n".join(products_info)
+
 
 if __name__ == "__main__":
     product1 = Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
@@ -75,3 +103,6 @@ if __name__ == "__main__":
 
     print(Category.category_count)
     print(Category.product_count)
+
+    new_product = Product.new_product("Sony WH-1000XM5", "Беспроводные наушники", 50000.0, 10)
+    print(f"Создан новый продукт: {new_product.name}, Цена: {new_product.price}")
