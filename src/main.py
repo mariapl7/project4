@@ -1,5 +1,3 @@
-
-
 class Product:
     """Клаcc для продукта."""
     name: str
