@@ -25,7 +25,8 @@ class Product:
     def price(self, new_price: float):
         self.__price.append(new_price)
         if new_price <= 0:
-            print('Цена не должна быть нулевая или отрицательная')
+            raise ValueError('Цена не должна быть нулевая или отрицательная')
+        self.__price = new_price
 
 
 class Category:
@@ -50,10 +51,13 @@ class Category:
 
     @property
     def products(self):
-        products_list = ""
+        products_info = []
+
         for product in self.__products:
-            products_list += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            return products_list
+            product_info = f"{product.name}, {product.price} руб.\nОстаток: {product.quantity} шт."
+            products_info.append(product_info)
+
+        return "\n".join(products_info)
 
 
 if __name__ == "__main__":
