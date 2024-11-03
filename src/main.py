@@ -5,13 +5,21 @@ class Product:
     price: float
     quantity: int
     product_count = 0
+    full_price: float
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name, description, price, quantity, full_price=0):
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        self.full_price = full_price
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return (self.price * self.quantity) + (other.price * other.quantity)
 
     @classmethod
     def new_product(cls, name, description, price, quantity):
@@ -45,6 +53,9 @@ class Category:
         Category.category_count += 1
         Category.product_count += 1
 
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(self.__products)} шт."
+
     def add_product(self, product: Product):
         self.__products.append(product)
         Category.product_count += 1
@@ -54,7 +65,7 @@ class Category:
         products_info = []
 
         for product in self.__products:
-            product_info = f"{product.name}, {product.price} руб.\nОстаток: {product.quantity} шт."
+            product_info = f"{str(product)}"
             products_info.append(product_info)
 
         return "\n".join(products_info)
@@ -106,3 +117,9 @@ if __name__ == "__main__":
 
     new_product = Product.new_product("Sony WH-1000XM5", "Беспроводные наушники", 50000.0, 10)
     print(f"Создан новый продукт: {new_product.name}, Цена: {new_product.price}")
+
+    print(product1)
+    print(product2)
+    print(product3)
+    print(product4)
+    print(new_product)

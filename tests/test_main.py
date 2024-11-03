@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from src.main import Product, Category
 
 
@@ -57,6 +58,40 @@ def test_products_property(self):
     ).strip()
 
     assert self.category.products == expected_output, "Список продуктов сформирован неверно"
+
+
+def test_product_initialization(product):
+    assert product.name == "Товар1"
+    assert product.description == "Описание товара 1"
+    assert product.price == 100.0
+    assert product.quantity == 10
+
+
+def test_product_str(product):
+    assert str(product) == "Товар1, 100.0 руб.\nОстаток: 10 шт."
+
+
+def test_product_price_setter(product):
+    product.price = 120.0
+    assert product.price == 120.0
+    with pytest.raises(ValueError):
+        product.price = -50  # Проверка на установку отрицательной цены
+
+
+def test_category_initialization(category):
+    assert category.name == "Категория1"
+    assert category.description == "Описание категории 1"
+    assert len(category.products) == 1
+
+
+def test_category_add_product(category):
+    new_product = Product("Товар2", "Описание товара 2", 200.0, 5)
+    category.add_product(new_product)
+    assert len(category.products) == 2
+
+
+def test_category_str(category):
+    assert str(category) == "Категория1, количество продуктов: 1 шт."
 
 
 if __name__ == '__main__':
