@@ -13,9 +13,9 @@ def __str__(self):
 
 
 def __add__(self, other):
-    if not isinstance(other, Product):
-        return NotImplemented
-    return (self.price * self.quantity) + (other.price * other.quantity)
+    if type(other) is Product:
+        return (self.price * self.quantity) + (other.price * other.quantity)
+    raise TypeError
 
 
 @classmethod
@@ -66,6 +66,8 @@ def __str__(self):
 
 
 def add_product(self, product: Product):
+    if not isinstance(product, Product):
+        raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
     self.__products.append(product)
 
 
@@ -96,3 +98,20 @@ if __name__ == '__main__':
     print(product1 + product2)
     print(product1 + product3)
     print(product2 + product3)
+
+    product_sum = product1 + product2
+    print(product_sum)
+
+    category = Category("Смартфоны", "Современные смартфоны.")
+    category.add_product(product1)
+    category.add_product(product2)
+
+    print("Продукты в категории:")
+    for product in category.products:
+        print(product)
+
+    # Попробуем добавить продукт другого класса
+    try:
+        category.add_product("Некорректный продукт")  # должен вызвать TypeError
+    except TypeError as e:
+        print(e)
