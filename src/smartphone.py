@@ -11,7 +11,14 @@ class SmartPhone(Product):
 
 
 def __add__(self, other):
-    if not isinstance(SmartPhone):
+    if type(other) is SmartPhone:
+        return (self.price * self.quantity) + (other.price * other.quantity)
+    raise TypeError("Нельзя складывать продукты разных классов.")
+
+
+
+def __add__(self, other):
+    if not isinstance(other, SmartPhone):
         raise TypeError("Нельзя складывать продукты разных классов.")
     return (self.price * self.quantity) + (other.price * other.quantity)
 
@@ -49,7 +56,7 @@ if __name__ == "__main__":
     print(product3.memory)
     print(product3.color)
 
-for product in [product1, product2, product3]:
+for product in Product:
     print(f"{product.name}: {product.description}, {product.price} руб., Остаток: {product.quantity} шт., "
           f"Эффективность: {product.efficiency}, Модель: {product.model}, Память: {product.memory} ГБ, "
           f"Цвет: {product.color}"

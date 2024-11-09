@@ -67,8 +67,9 @@ def __str__(self):
 
 def add_product(self, product: Product):
     if not isinstance(product, Product):
+        self.__products.append(product)
+    else:
         raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
-    self.__products.append(product)
 
 
 @property
