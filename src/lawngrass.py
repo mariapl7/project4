@@ -9,15 +9,16 @@ class LawnGrass(Product):
         self.color = color
 
 
-def __add__(self, other):
-    if type(other) is LawnGrass:
-        return (self.price * self.quantity) + (other.price * other.quantity)
-    raise TypeError("Нельзя складывать продукты разных классов.")
+    # def __add__(self, other):
+    #     if type(other) is LawnGrass:
+    #         return (self.price * self.quantity) + (other.price * other.quantity)
+    #     raise TypeError("Нельзя складывать продукты разных классов.")
 
-def __add__(self, other):
-    if not isinstance(other, LawnGrass):
-        raise TypeError("Нельзя складывать продукты разных классов.")
-    return (self.price * self.quantity) + (other.price * other.quantity)
+
+    def __add__(self, other):
+        if not isinstance(other, LawnGrass):
+            raise TypeError("Нельзя складывать продукты разных классов.")
+        return (self.price * self.quantity) + (other.price * other.quantity)
 
 
 if __name__ == "__mane__":

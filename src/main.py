@@ -7,32 +7,39 @@ class Product:
     product_count = 0
     full_price: float
 
-
-def __str__(self):
-    return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
-
-
-def __add__(self, other):
-    if type(other) is Product:
-        return (self.price * self.quantity) + (other.price * other.quantity)
-    raise TypeError
+    def __init__(self, name, description, price, quantity):
+        """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
+        self.name = name
+        self.description = description
+        self.__price = price
+        self.quantity = quantity
 
 
-@classmethod
-def new_product(cls, name, description, price, quantity):
-    return cls(name, description, price, quantity)
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
 
-@property
-def price(self):
-    return self.__price
+    def __add__(self, other):
+        if type(other) is Product:
+            return (self.price * self.quantity) + (other.price * other.quantity)
+        raise TypeError
 
 
-@price.setter
-def price(self, new_price: float):
-    if new_price <= 0:
-        raise ValueError('Цена не должна быть нулевая или отрицательная')
-    self.__price = new_price
+    @classmethod
+    def new_product(cls, name, description, price, quantity):
+        return cls(name, description, price, quantity)
+
+
+    @property
+    def price(self):
+        return self.__price
+
+
+    @price.setter
+    def price(self, new_price: float):
+        if new_price <= 0:
+            raise ValueError('Цена не должна быть нулевая или отрицательная')
+        self.__price = new_price
 
 
 class Category:
@@ -44,37 +51,30 @@ class Category:
     category_count = 0
 
 
-def __init__(self, name, description, products):
-    """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
-    self.name = name
-    self.description = description
-    self.__products = products
-    Category.category_count += 1
-    Category.product_count += 1
+    def __init__(self, name, description, products):
+        """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
+        self.name = name
+        self.description = description
+        self.__products = products if products is not None else []
+        Category.category_count += 1
+        Category.product_count += 1
 
 
-def __init__(self, name: str, description: str, products=None):
-    """Метод для инициализации экземпляра класса."""
-    self.name = name
-    self.description = description
-    self.__products = products if products is not None else []
+    def __str__(self):
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
 
 
-def __str__(self):
-    total_quantity = sum(product.quantity for product in self.__products)
-    return f"{self.name}, количество продуктов: {total_quantity} шт."
+    def add_product(self, product: Product):
+        if not isinstance(product, Product):
+            self.__products.append(product)
+        else:
+            raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
 
 
-def add_product(self, product: Product):
-    if not isinstance(product, Product):
-        self.__products.append(product)
-    else:
-        raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
-
-
-@property
-def products(self):
-    return self.__products
+    @property
+    def products(self):
+        return self.__products
 
 
 if __name__ == '__main__':

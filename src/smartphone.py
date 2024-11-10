@@ -10,17 +10,16 @@ class SmartPhone(Product):
         self.color = color
 
 
-def __add__(self, other):
-    if type(other) is SmartPhone:
+    # def __add__(self, other):
+    #     if type(other) is SmartPhone:
+    #         return (self.price * self.quantity) + (other.price * other.quantity)
+    #     raise TypeError("Нельзя складывать продукты разных классов.")
+
+
+    def __add__(self, other):
+        if not isinstance(other, SmartPhone):
+            raise TypeError("Нельзя складывать продукты разных классов.")
         return (self.price * self.quantity) + (other.price * other.quantity)
-    raise TypeError("Нельзя складывать продукты разных классов.")
-
-
-
-def __add__(self, other):
-    if not isinstance(other, SmartPhone):
-        raise TypeError("Нельзя складывать продукты разных классов.")
-    return (self.price * self.quantity) + (other.price * other.quantity)
 
 
 if __name__ == "__main__":
