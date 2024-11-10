@@ -20,7 +20,7 @@ class Product:
 
 
     def __add__(self, other):
-        if type(other) is Product:
+        if isinstance(other, Product):
             return (self.price * self.quantity) + (other.price * other.quantity)
         raise TypeError
 
@@ -46,7 +46,7 @@ class Category:
     """Класс для категории."""
     name: str
     description: str
-    products: str
+    products: list
     product_count = 0
     category_count = 0
 
@@ -55,9 +55,8 @@ class Category:
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
         self.description = description
-        self.__products = products if products is not None else []
+        self.__products = products or []
         Category.category_count += 1
-        Category.product_count += 1
 
 
     def __str__(self):
@@ -66,7 +65,7 @@ class Category:
 
 
     def add_product(self, product: Product):
-        if not isinstance(product, Product):
+        if isinstance(product, Product):
             self.__products.append(product)
         else:
             raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
@@ -102,17 +101,3 @@ if __name__ == '__main__':
 
     product_sum = product1 + product2
     print(product_sum)
-
-    category = Category("Смартфоны", "Современные смартфоны.")
-    category.add_product(product1)
-    category.add_product(product2)
-
-    print("Продукты в категории:")
-    for product in category.products:
-        print(product)
-
-    # Попробуем добавить продукт другого класса
-    try:
-        category.add_product("Некорректный продукт")  # должен вызвать TypeError
-    except TypeError as e:
-        print(e)

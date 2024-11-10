@@ -55,8 +55,10 @@ if __name__ == "__main__":
     print(product3.memory)
     print(product3.color)
 
-for product in Product:
-    print(f"{product.name}: {product.description}, {product.price} руб., Остаток: {product.quantity} шт., "
-          f"Эффективность: {product.efficiency}, Модель: {product.model}, Память: {product.memory} ГБ, "
-          f"Цвет: {product.color}"
-          )
+    products = [product1, product2, product3]  # Список для хранения экземпляров
+
+    for product in products:
+        print(f"{product.name}: {product.description}, {product.price} руб., Остаток: {product.quantity} шт., "
+              f"Эффективность: {product.efficiency}, Модель: {product.model}, Память: {product.memory} ГБ, "
+              f"Цвет: {product.color}"
+              )
