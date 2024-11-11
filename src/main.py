@@ -20,9 +20,9 @@ class Product:
 
 
     def __add__(self, other):
-        if isinstance(other, Product):
+        if type(other) is Product:
             return (self.price * self.quantity) + (other.price * other.quantity)
-        raise TypeError
+        raise TypeError("Нельзя складывать продукты разных классов.")
 
 
     @classmethod
