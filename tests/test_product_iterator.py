@@ -18,9 +18,9 @@ def test_empty_category():
     empty_category = Category("Пустая категория", "Нет продуктов.")
     iterator = ProductIterator(empty_category)
 
-    products = list(iterator)
+    products = list(iterator)  # Преобразуем итератор в список
 
-    assert len(products) == 0
+    assert len(products) == 0  # Проверяем, что список пустой
 
 
 if __name__ == "__main__":

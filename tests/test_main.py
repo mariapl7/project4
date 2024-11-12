@@ -75,5 +75,5 @@ def test_category_str():
     category.add_product(product2)
     assert str(category) == "Смартфоны, количество продуктов: 13 шт."
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

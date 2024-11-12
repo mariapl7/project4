@@ -2,26 +2,20 @@ from src.main import Product, Category
 
 
 class ProductIterator:
-    """Итератор для перебора продуктов в категории."""
+    def __init__(self, category):
+        self._category = category
+        self._index = 0
 
+    def __iter__(self):
+        return self
 
-def __init__(self, category_obj):
-    self.category = category_obj
-    self.index = 0
-
-
-def __iter__(self):
-    """Возвращает объект итератора (сам себя)."""
-    return self
-
-
-def __next__(self):
-    """Возвращает следующий продукт из категории или вызывает StopIteration."""
-    if self.index < len(self.category.products):
-        products = self.category.products[self.index]
-        self.index += 1
-        return products
-    raise StopIteration
+    def __next__(self):
+        if self._index < len(self._category.products):
+            product = self._category.products[self._index]
+            self._index += 1
+            return product
+        else:
+            raise StopIteration
 
 
 if __name__ == "__main__":

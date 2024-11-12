@@ -7,6 +7,7 @@ class Product:
     product_count = 0
     full_price: float
 
+
     def __init__(self, name, description, price, quantity):
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
