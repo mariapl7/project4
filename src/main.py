@@ -1,5 +1,6 @@
 from src.base_product import BaseProduct
 from src.print_mixin import PrintMixin
+from src.exceptions import ZeroQuantityError
 
 
 class Product(BaseProduct, PrintMixin):
@@ -17,7 +18,12 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity >= 0:
+            self.quantity = quantity
+        else:
+            raise ValueError('Товар с нулевым количеством не может быть добавлен')
+        self.full_price = price * quantity  # Инициализация full_price
+        Product.product_count += 1  # Увеличение счетчика продуктов
         super().__init__()
 
 
@@ -57,11 +63,11 @@ class Category:
     category_count = 0
 
 
-    def __init__(self, name, description, products):
+    def __init__(self, name, description, products=None):
         """Метод для инициализации экземпляра класса. Задаем значения атрибутам экземпляра."""
         self.name = name
         self.description = description
-        self.__products = products or []
+        self.__products = products if products is not None else []
         Category.category_count += 1
 
 
@@ -69,17 +75,46 @@ class Category:
         total_quantity = sum(product.quantity for product in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
-
     def add_product(self, product: Product):
-        if isinstance(product, Product):
+        try:
+            if not isinstance(product, Product):
+                raise TypeError("Можно добавлять только объекты класса Product или его наследников.")
+
+            if product.quantity <= 0:
+                raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен.")
+
             self.__products.append(product)
+            print(f"Товар '{product.name}' добавлен в категорию '{self.name}'.")
+
+        except ZeroQuantityError as e:
+            print(e)  # Выводим сообщение об ошибке
+        except TypeError as e:
+            print(e)  # Выводим сообщение об ошибке
         else:
-            raise TypeError("Можно добавлять только объекты класса SmartPhone или его наследников.")
+            print("Добавление товара прошло успешно.")  # Сообщение при успешном добавлении
+        finally:
+            print("Обработка добавления товара завершена.")  # Сообщение в любом случае
+        self.__products.append(product)
+        print(f"Товар '{product.name}' добавлен в категорию '{self.name}'.")
 
 
     @property
     def products(self):
         return self.__products
+
+    # def average_price(self):
+    #     try:
+    #         if not self.products:
+    #             raise ValueError("Нет товаров в категории.")
+    #
+    #         total_price = sum(product.price * product.quantity for product in self.products)
+    #         total_quantity = sum(product.quantity for product in self.products)
+    #         average = total_price / total_quantity
+    #         return average
+    #
+    #     except ValueError as e:
+    #         print(e)
+    #         return 0
 
 
 if __name__ == '__main__':
@@ -107,3 +142,26 @@ if __name__ == '__main__':
 
     product_sum = product1 + product2
     print(product_sum)
+
+    # product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, quantity=-1)
+
+    # Создаем пустую категорию
+    category = Category("Пустая категория", "Категория без продуктов", products=[])
+    print(category.average_price())  # Вывод: 0, так как нет товаров
+
+    # Добавляем продукты в категорию
+    category.add_product(Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5))
+    category.add_product(Product("Iphone 15", "512GB, Gray space", 210000.0, 8))
+    category.add_product(Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14))
+
+    print(category.average_price())
+
+    try:
+        category.add_product(product1)  # Успешное добавление
+    except Exception as e:
+        print(e)
+
+    try:
+        category.add_product(product2)  # Ошибка при добавлении
+    except Exception as e:
+        print(e)

@@ -1,6 +1,7 @@
 from src.smartphone import SmartPhone
 from src.lawngrass import LawnGrass
 from src.main import Product, Category
+from src.exceptions import ZeroQuantityError
 
 
 import pytest
@@ -118,3 +119,28 @@ def grass2():
         germination_period="5 дней",
         color="Темно-зеленый"
     )
+
+
+@pytest.fixture
+def valid_product():
+    """Фикстура для создания валидного продукта с положительным количеством."""
+    return Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+
+
+@pytest.fixture
+def category():
+    """Фикстура для создания категории."""
+    cat = Category("Электроника", "Различные электронные устройства")
+    return cat
+
+
+@pytest.fixture
+def product_with_positive_quantity():
+    """Фикстура для создания продукта с положительным количеством."""
+    return Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+
+
+@pytest.fixture
+def product_with_zero_quantity():
+    """Фикстура для создания продукта с нулевым количеством."""
+    return Product("Ноутбук", "Игровой ноутбук", 100000, 0)
