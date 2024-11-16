@@ -1,11 +1,11 @@
 from src.product_iterator import ProductIterator
 
 
-def test_product_iterator(category):
-    iterator = ProductIterator(category)
-    products = list(iterator)  # Преобразуем итератор в список
+def test_product_iterator(category_with_products):
+    iterator = ProductIterator(category_with_products)
+    products = list(iterator)
 
-    assert len(products) == 3  # Проверяем, что количество продуктов соответствует ожидаемому
+    assert len(products) == 3
     assert products[0].name == "Samsung Galaxy C23 Ultra"
     assert products[1].name == "Iphone 15"
     assert products[2].name == "Xiaomi Redmi Note 11"

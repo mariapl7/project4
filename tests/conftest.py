@@ -52,6 +52,15 @@ def product2():
 
 
 @pytest.fixture
+def category_with_products():
+    category_instance = Category(name="Смартфоны", description="Категория для смартфонов")
+    category_instance.add_product(Product(name="Samsung Galaxy C23 Ultra", description="", price=180000.0, quantity=5))
+    category_instance.add_product(Product(name="Iphone 15", description="512GB, Gray space", price=210000.0, quantity=8))
+    category_instance.add_product(Product(name="Xiaomi Redmi Note 11", description="1024GB, Blue", price=31000.0, quantity=14))
+    return category_instance
+
+
+@pytest.fixture
 def smartphone1():
     return SmartPhone(
         name="Samsung Galaxy S23 Ultra",
@@ -128,19 +137,11 @@ def valid_product():
 
 
 @pytest.fixture
+def product():
+    return Product(name="Iphone 15", description="512GB, Gray space", price=210000.0, quantity=10)
+
+
+# Фикстура для создания объекта Category
+@pytest.fixture
 def category():
-    """Фикстура для создания категории."""
-    cat = Category("Электроника", "Различные электронные устройства")
-    return cat
-
-
-@pytest.fixture
-def product_with_positive_quantity():
-    """Фикстура для создания продукта с положительным количеством."""
-    return Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-
-
-@pytest.fixture
-def product_with_zero_quantity():
-    """Фикстура для создания продукта с нулевым количеством."""
-    return Product("Ноутбук", "Игровой ноутбук", 100000, 0)
+    return Category(name="Смартфоны", description="Категория для смартфонов")

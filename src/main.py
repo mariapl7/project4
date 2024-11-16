@@ -76,45 +76,32 @@ class Category:
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product):
-        try:
-            if not isinstance(product, Product):
-                raise TypeError("Можно добавлять только объекты класса Product или его наследников.")
+        """Добавляет продукт в категорию."""
+        if not isinstance(product, Product):
+            raise TypeError("Можно добавлять только объекты класса Product или его наследников.")
 
-            if product.quantity <= 0:
-                raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен.")
+        if product.quantity <= 0:
+            raise ZeroQuantityError("Товар с нулевым количеством не может быть добавлен.")
 
-            self.__products.append(product)
-            print(f"Товар '{product.name}' добавлен в категорию '{self.name}'.")
-
-        except ZeroQuantityError as e:
-            print(e)  # Выводим сообщение об ошибке
-        except TypeError as e:
-            print(e)  # Выводим сообщение об ошибке
-        else:
-            print("Добавление товара прошло успешно.")  # Сообщение при успешном добавлении
-        finally:
-            print("Обработка добавления товара завершена.")  # Сообщение в любом случае
         self.__products.append(product)
         print(f"Товар '{product.name}' добавлен в категорию '{self.name}'.")
-
 
     @property
     def products(self):
         return self.__products
 
-    # def average_price(self):
-    #     try:
-    #         if not self.products:
-    #             raise ValueError("Нет товаров в категории.")
-    #
-    #         total_price = sum(product.price * product.quantity for product in self.products)
-    #         total_quantity = sum(product.quantity for product in self.products)
-    #         average = total_price / total_quantity
-    #         return average
-    #
-    #     except ValueError as e:
-    #         print(e)
-    #         return 0
+    def average_price(self):
+        try:
+            if not self.__products:
+                raise ValueError("Нет товаров в категории.")
+
+            total_price = sum(product.price * product.quantity for product in self.__products)
+            total_quantity = sum(product.quantity for product in self.__products)
+            average = total_price / total_quantity
+            return average
+        except ValueError as e:
+            print(e)
+            return 0
 
 
 if __name__ == '__main__':
