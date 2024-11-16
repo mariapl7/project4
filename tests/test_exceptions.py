@@ -21,3 +21,4 @@ def test_average_price(category):
     category.add_product(product1)
     category.add_product(product2)
     assert category.average_price() == (900000.0 + 1680000.0) / 13  # (180000.0 * 5 + 210000.0 * 8) / 13
+

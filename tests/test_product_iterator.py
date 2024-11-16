@@ -16,3 +16,4 @@ def test_empty_category(empty_category):
     products = list(iterator)  # Преобразуем итератор в список
 
     assert len(products) == 0  # Проверяем, что список пустой
+
