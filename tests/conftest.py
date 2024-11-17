@@ -1,7 +1,6 @@
 from src.smartphone import SmartPhone
 from src.lawngrass import LawnGrass
 from src.main import Product, Category
-from src.exceptions import ZeroQuantityError
 
 
 import pytest
@@ -55,8 +54,10 @@ def product2():
 def category_with_products():
     category_instance = Category(name="Смартфоны", description="Категория для смартфонов")
     category_instance.add_product(Product(name="Samsung Galaxy C23 Ultra", description="", price=180000.0, quantity=5))
-    category_instance.add_product(Product(name="Iphone 15", description="512GB, Gray space", price=210000.0, quantity=8))
-    category_instance.add_product(Product(name="Xiaomi Redmi Note 11", description="1024GB, Blue", price=31000.0, quantity=14))
+    category_instance.add_product(Product(name="Iphone 15", description="512GB, Gray space", price=210000.0,
+                                          quantity=8))
+    category_instance.add_product(Product(name="Xiaomi Redmi Note 11", description="1024GB, Blue", price=31000.0,
+                                          quantity=14))
     return category_instance
 
 
@@ -131,17 +132,26 @@ def grass2():
 
 
 @pytest.fixture
-def valid_product():
-    """Фикстура для создания валидного продукта с положительным количеством."""
-    return Product("Samsung Galaxy C23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-
-
-@pytest.fixture
 def product():
-    return Product(name="Iphone 15", description="512GB, Gray space", price=210000.0, quantity=10)
+    return Product(name="Samsung Galaxy C23 Ultra", description="256GB, Серый цвет, 200MP камера", price=180000.0,
+                   quantity=5)
 
 
-# Фикстура для создания объекта Category
 @pytest.fixture
 def category():
-    return Category(name="Смартфоны", description="Категория для смартфонов")
+    return Category(name="Тестовая категория", description="Описание категории")
+
+@pytest.fixture
+def valid_product():
+    return Product(name="Valid Product", description="A valid product", price=100.0, quantity=10)
+
+
+@pytest.fixture
+def category_with_products():
+    category_instance = Category(name="Смартфоны", description="Категория для смартфонов")
+    category_instance.add_product(Product(name="Samsung Galaxy C23 Ultra", description="", price=180000.0, quantity=5))
+    category_instance.add_product(Product(name="Iphone 15", description="512GB, Gray space", price=210000.0,
+                                          quantity=8))
+    category_instance.add_product(Product(name="Xiaomi Redmi Note 11", description="1024GB, Blue", price=31000.0,
+                                          quantity=14))
+    return category_instance

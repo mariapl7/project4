@@ -18,10 +18,11 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.__price = price
-        if quantity >= 0:
-            self.quantity = quantity
-        else:
-            raise ValueError('Товар с нулевым количеством не может быть добавлен')
+
+        if quantity <= 0:  # Изменение условия: теперь проверяем на <= 0
+            raise ValueError('Товар может быть добавлен только с положительным количеством.')
+        self.quantity = quantity
+
         self.full_price = price * quantity  # Инициализация full_price
         Product.product_count += 1  # Увеличение счетчика продуктов
         super().__init__()
@@ -45,7 +46,6 @@ class Product(BaseProduct, PrintMixin):
     @property
     def price(self):
         return self.__price
-
 
     @price.setter
     def price(self, new_price: float):
